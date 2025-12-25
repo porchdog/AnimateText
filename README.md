@@ -73,7 +73,7 @@ The Swift Package Manager is a tool for automating the distribution of Swift cod
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/jasudev/AnimateText.git", .branch("main"))
+    .package(url: "https://github.com/porchdog/AnimateText.git", .branch("main"))
 ]
 ```
 
