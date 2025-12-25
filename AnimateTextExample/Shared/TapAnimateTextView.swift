@@ -16,13 +16,14 @@ struct TapAnimateTextView<E: ATTextAnimateEffect>: View {
     var userInfo: Any? = nil
     
     @State private var text: String = ""
+    @State private var trigger: Bool = false
     
     var body: some View {
         GeometryReader { proxy in
             VStack(alignment: .leading) {
                 Spacer()
                 ZStack(alignment: .leading) {
-                    AnimateText<E>($text, type: type, userInfo: userInfo)
+					AnimateText<E>($text, trigger: $trigger, type: type, userInfo: userInfo)
                         .font(.custom("Helvetica SemiBold", size: 30))
                         .padding(.vertical)
                     if text.isEmpty {

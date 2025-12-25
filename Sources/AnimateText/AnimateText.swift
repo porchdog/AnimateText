@@ -30,6 +30,8 @@ public struct AnimateText<E: ATTextAnimateEffect>: View {
     
     /// Binding the text to be expressed.
     @Binding private var text: String
+
+    @Binding private var trigger: Bool
     
     /// The type used to split text.
     var type: ATUnitType = .letters
@@ -59,8 +61,9 @@ public struct AnimateText<E: ATTextAnimateEffect>: View {
     ///   - type: The type used to split text. `ATUnitType`
     ///   - userInfo: Custom user info for the effect.
     ///
-    public init(_ text: Binding<String>, type: ATUnitType = .letters, userInfo: Any? = nil) {
+    public init(_ text: Binding<String>, trigger: Binding<Bool>, type: ATUnitType = .letters, userInfo: Any? = nil) {
         _text = text
+        _trigger = trigger
         self.type = type
         self.userInfo = userInfo
     }
@@ -91,6 +94,17 @@ public struct AnimateText<E: ATTextAnimateEffect>: View {
             }
         }
         .onChange(of: text) { _ in
+            withAnimation {
+                value = 0
+                getText(text)
+                toggle.toggle()
+            }
+            self.isChanged = true
+            DispatchQueue.main.async {
+                value = 1
+            }
+        }
+        .onChange(of: trigger) { _ in
             withAnimation {
                 value = 0
                 getText(text)
